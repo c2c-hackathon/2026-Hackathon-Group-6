@@ -15,17 +15,20 @@ class ConnectFour:
                             {0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0}] #TODO: Choose a structure to represent what pieces are currently in the game board
+                            {0,0,0,0,0,0,0,0}]
+        self.register_callbacks()
 
-    def reset_game(self):
+    def reset_game(self, x:int, y: int, action: Action):
         #TODO reset the game state to its original empty state
         pass
+        
 
     def register_callbacks(self):
         #TODO: Register callbacks that will be run when buttons are pressed and released
         self.board.set_callback(0, 0, self.handle_button_event) # Example of how to register a callback (function) for button 0, 0. Must be done for every button that runs a function
         self.board.activate_key(0, 0, Action.BUTTON_PRESSED) # Even though the callback is set, if the key is not enabled it will not be run. This is how you enable
-
+        self.board.set_callback(0,1, self.reset_game)
+        self.board.activate_key(0, 1, Action.BUTTON_PRESSED)
         pass
   
     def handle_button_event(self, x:int, y: int, action: Action):
@@ -34,7 +37,7 @@ class ConnectFour:
         See NeoTrellisGame.set_callback() for info about callbacks.
         """
         #TODO: Implement what will happen when the button at position x,y is pressed or released
-  
+        print("handled button event")
         pass
 
     def find_lowest_empty_row(self, col: int):
@@ -48,6 +51,7 @@ class ConnectFour:
     def update_board_colors(self):
         #TODO: Take the current game state and update the board colors accordingly. Hint: look at NeoTrellisGame.py for functions to update the colors and display the colors
         pass
+    
 
     def switch_player(self):
         #TODO: Change which player is curently placing a piece. Keep track of this in some sort of variable
