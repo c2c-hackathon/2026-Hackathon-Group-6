@@ -10,20 +10,20 @@ player_one = 1
 player_two = 2
 settings = -1
 empty_board = [ [0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0],
+                [-2,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0]]
-current_player = 1
 
 class ConnectFour:
-    def __init__(self, board: typing.Optional[AbstractNeoTrellisGame] = None, ):
+    def __init__(self, board: typing.Optional[AbstractNeoTrellisGame] = None):
         self.board = board if board is not None else NeoTrellisGame()
         super().__init__()
-        self.game_state = empty_board #0 <- empty | 1 <-player1 | 2 <-player2 | -1 <- SETTINGS...
+        self.game_state = empty_board #0 <- empty | 1 <-player1 | 2 <-player2 | -1 <- SETTINGS... | -2  <- RESET
+        self.current_player = 1
         self.register_callbacks()
         print(self.is_board_full())
 
@@ -38,8 +38,6 @@ class ConnectFour:
 
     def register_callbacks(self):
         #TODO: Register callbacks that will be run when buttons are pressed and released
-        self.board.set_callback(0, 0, self.handle_button_event) # Example of how to register a callback (function) for button 0, 0. Must be done for every button that runs a function
-        self.board.activate_key(0, 0, Action.BUTTON_PRESSED) # Even though the callback is set, if the key is not enabled it will not be run. This is how you enable
         self.board.set_callback(0,1, self.reset_game)
         self.board.activate_key(0, 1, Action.BUTTON_PRESSED)
   
@@ -75,19 +73,21 @@ class ConnectFour:
                 x = j
                 y = i
                 if self.game_state[i][j] == 1:
-                    color = Colors.BLUE
-                elif self.game_state[i][j] == 2:
                     color = Colors.RED
+                elif self.game_state[i][j] == 2:
+                    color = Colors.YELLOW
                 else:
                     color = Colors.WHITE
                 self.board.set_cell_color(x, y, color)
-                 
         self.board.update_display()
     
 
     def switch_player(self):
         #TODO: Change which player is curently placing a piece. Keep track of this in some sort of variable
-        pass
+        if self.current_player == 1:
+            self.current_player == 2
+        elif self.current_player == 2:
+            self.current_player = 1
 
     def show_current_player(self):
         #TODO: Function to indicate on the board which player is currently placing a piece
@@ -104,7 +104,10 @@ class ConnectFour:
 
     def get_player_color(self, player) -> tuple[int, int, int]:
         #TODO: Return the color for the given player 
-        pass
+        if self.current_player == 1:
+            return Colors.RED
+        elif self.current_player == 2:
+            return Colors.YELLOW
 
     def is_column_full(self, col: int):
         #TODO: Return if the given column is currently full
