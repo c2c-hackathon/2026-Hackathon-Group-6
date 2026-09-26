@@ -3,6 +3,7 @@ import typing
 from NeoTrellisGame import NeoTrellisGame, AbstractNeoTrellisGame, Action
 from adafruit_neotrellis.multitrellis import MultiTrellis
 from adafruit_neotrellis.neotrellis import NeoTrellis
+import Colors
 
 
 player_one = 1
@@ -27,10 +28,10 @@ class ConnectFour:
 
     def reset_game(self, x:int, y: int, action: Action):
         #TODO reset the game state to its original empty state
-        pass
-        self.clear_board()
+        self.board.clear_board()
         self.game_state = empty_board
         current_player = 1
+        self.update_board_colors()
         
 
     def register_callbacks(self):
@@ -39,7 +40,6 @@ class ConnectFour:
         self.board.activate_key(0, 0, Action.BUTTON_PRESSED) # Even though the callback is set, if the key is not enabled it will not be run. This is how you enable
         self.board.set_callback(0,1, self.reset_game)
         self.board.activate_key(0, 1, Action.BUTTON_PRESSED)
-        pass
   
     def handle_button_event(self, x:int, y: int, action: Action):
         """
@@ -47,6 +47,8 @@ class ConnectFour:
         See NeoTrellisGame.set_callback() for info about callbacks.
         """
         #TODO: Implement what will happen when the button at position x,y is pressed or released
+
+
         print("handled button event")
         pass
 
@@ -59,7 +61,18 @@ class ConnectFour:
         pass
 
     def update_board_colors(self):
-        #TODO: Take the current game state and update the board colors accordingly. Hint: look at NeoTrellisGame.py for functions to update the colors and display the colors
+        #TODO: un hardcoded magic number of 8
+        for i in range(0, 8):
+            for j in range(0, 8):
+                x = i
+                y = j
+                if self.game_state[i][j] == 1:
+                    color = Colors.BLUE
+                elif self.game_state[i][j] == 2:
+                    color = Colors.RED
+                else:
+                    color = Colors.WHITE
+                self.board.set_cell_color(x, y, color)
         pass
     
 
