@@ -132,13 +132,72 @@ class ConnectFour:
             return Colors.YELLOW
 
 
-    def check_win(self):
-        #Check the game state to see if any player has won or if there is a draw
-        pass
+    def checkWinner(board):
+        up_d = [[3,0], [4,0],[3,1], [5,0],[4,1],[3,2], [5,1],[4,2],[3,3], [5,2],[4,3],[3,4], [5,3],[4,4], [5,4]]
+        dn_d = [[2,0], [1,0],[2,1], [0,0],[1,1],[2,2], [0,1],[1,2],[2,3], [0,2],[1,3],[2,4], [0,3],[1,4], [0,4]]
+        window = []
+        winner = 0
+        # check horizontals
+        for i in range(0, 6):
+            for j in range(0, 5):
+                for l in range(4):
+                    window.append(board[i][j+l])
+                if window == [1, 1, 1, 1]:
+                    winner = 1 # player1
+                elif window == [2, 2, 2, 2]:
+                    winner = 2 # player2
+                else:
+                    pass
+                print(window)
+                window.clear()
+        # check verticals
+        for i in range(0, 3):
+            for j in range(0, 8):
+                for l in range(4):
+                    window.append(board[i+l][j])
+                if window == [1, 1, 1, 1]:
+                    winner = 1 # player1
+                elif window == [2, 2, 2, 2]:
+                    winner = 2 # player2
+                else:
+                    pass
+                print(window)
+                window.clear()
+        #check upward diagonals
+        for list in up_d:
+            for l in range(4):
+                window.append(board[list[0] - l][list[1] + l])
+            if window == [1, 1, 1, 1]:
+                winner = 1 # player1
+            elif window == [2, 2, 2, 2]:
+                winner = 2 # player2
+            else:
+                pass
+            print(window)
+            window.clear()
+
+        for list in dn_d:
+            for l in range(4):
+                window.append(board[list[0] + l][list[1] + l])
+            if window == [1, 1, 1, 1]:
+                winner = 1 # player1
+            elif window == [2, 2, 2, 2]:
+                winner = 2 # player2
+            else:
+                pass
+            print(window)
+            window.clear()
+
+        
+
+        #check downward diagonals
+        return winner
+    
 
     def show_winner(self):
-        #Display on the board who won
+        win = checkWinner(self.game_state)
         pass
+
 
     def show_tie_game(self):
         #Display on the board that there was a draw
