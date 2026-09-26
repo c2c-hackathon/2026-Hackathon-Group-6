@@ -11,8 +11,6 @@ difficulty = 1
 player_two = 2
 settings = -1
 empty_board = [ [0,0,0,0,0,0,0,0],
-                [-2,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0],
@@ -34,6 +32,7 @@ class ConnectFour:
         self.game_state = empty_board
         current_player = 1
         self.update_board_colors()
+        self.show_current_player()
         print("reset game...")
         
 
@@ -65,14 +64,24 @@ class ConnectFour:
                 return row - 1
         return len(self.game_state) -1
 
-    def place_piece(self, x:int, y: int, action: Action):
-        #Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
-        pass
+    def place_piece(self, col: int):
+        #TODO: Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
+        #find lowest row
+        #check if row above is free
+        #place piece | color is current player color
+        mt_row = []
+        mt_row = find_lowest_empty_row()
+        colorz = get_player_color(current_player)
+
+        if mt_row != -1:
+            self.board.set_call_color(mt_row[0], mt_row[1], colorz)
+        self.board.update_display()
+        
 
     def update_board_colors(self):
         #un hardcoded magic number of 8
         color = Colors.WHITE
-        for i in range(2, 8):
+        for i in range(0, 6):
             for j in range(0, 8):
                 x = j
                 y = i
@@ -82,7 +91,7 @@ class ConnectFour:
                     color = Colors.YELLOW
                 else:
                     color = Colors.WHITE
-                self.board.set_cell_color(x, y, color)
+                self.board.set_cell_color(x, y+2, color)
         self.board.update_display()
     
 
@@ -102,6 +111,8 @@ class ConnectFour:
             if self.current_player == 2:
                 color = Colors.YELLOW
             self.board.set_cell_color(i,0, color)
+
+        self.board.update_display()
         pass
 
     def is_board_full(self):
