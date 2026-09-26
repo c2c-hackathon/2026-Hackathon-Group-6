@@ -4,23 +4,33 @@ from NeoTrellisGame import NeoTrellisGame, AbstractNeoTrellisGame, Action
 from adafruit_neotrellis.multitrellis import MultiTrellis
 from adafruit_neotrellis.neotrellis import NeoTrellis
 
+
+player_one = 1
+player_two = 2
+settings = -1
+empty_board = [ [0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0]]
+current_player = 1
+
 class ConnectFour:
-    def __init__(self, board: typing.Optional[AbstractNeoTrellisGame] = None):
+    def __init__(self, board: typing.Optional[AbstractNeoTrellisGame] = None, ):
         self.board = board if board is not None else NeoTrellisGame()
         super().__init__()
-        self.game_state = [ {0,0,0,0,0,0,0,0}, #0 <- empty | 1 <-player1 | 2 <-player2 | -1 <- SETTINGS...
-                            {0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0}]
+        self.game_state = empty_board #0 <- empty | 1 <-player1 | 2 <-player2 | -1 <- SETTINGS...
         self.register_callbacks()
 
     def reset_game(self, x:int, y: int, action: Action):
         #TODO reset the game state to its original empty state
         pass
+        self.clear_board()
+        self.game_state = empty_board
+        current_player = 1
         
 
     def register_callbacks(self):
