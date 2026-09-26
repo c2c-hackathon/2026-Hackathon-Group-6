@@ -25,10 +25,10 @@ class ConnectFour:
         self.game_state = empty_board #0 <- empty | 1 <-player1 | 2 <-player2 | -1 <- SETTINGS... | -2  <- RESET
         self.current_player = 1
         self.register_callbacks()
-        print(self.is_board_full())
+        self.show_current_player()
 
     def reset_game(self, x:int, y: int, action: Action):
-        #TODO reset the game state to its original empty state
+        #reset the game state to its original empty state
         self.board.clear_board()
         self.game_state = empty_board
         current_player = 1
@@ -37,7 +37,7 @@ class ConnectFour:
         
 
     def register_callbacks(self):
-        #TODO: Register callbacks that will be run when buttons are pressed and released
+        #Register callbacks that will be run when buttons are pressed and released
         self.board.set_callback(0,1, self.reset_game)
         self.board.activate_key(0, 1, Action.BUTTON_PRESSED)
   
@@ -46,14 +46,14 @@ class ConnectFour:
         This is an example of how a callback function will look. It takes an x value, y value, and action, which will indicate what button activated the callback and what action the user did to run it.
         See NeoTrellisGame.set_callback() for info about callbacks.
         """
-        #TODO: Implement what will happen when the button at position x,y is pressed or released
+        #Implement what will happen when the button at position x,y is pressed or released
 
 
         print("handled button event")
         pass
     #If the row is full, it will return -1.
     def find_lowest_empty_row(self, col: int):
-        #TODO: Return the lowest empty row in the column.
+        #Return the lowest empty row in the column.
         for row in range(len(self.game_state)):
             if self.game_state[row][col] == 0:
                 continue
@@ -62,11 +62,11 @@ class ConnectFour:
         return len(self.game_state) -1
 
     def place_piece(self, col: int):
-        #TODO: Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
+        #Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
         pass
 
     def update_board_colors(self):
-        #TODO: un hardcoded magic number of 8
+        #un hardcoded magic number of 8
         color = Colors.WHITE
         for i in range(2, 8):
             for j in range(0, 8):
@@ -83,18 +83,25 @@ class ConnectFour:
     
 
     def switch_player(self):
-        #TODO: Change which player is curently placing a piece. Keep track of this in some sort of variable
+        #Change which player is curently placing a piece. Keep track of this in some sort of variable
         if self.current_player == 1:
             self.current_player == 2
         elif self.current_player == 2:
             self.current_player = 1
 
     def show_current_player(self):
-        #TODO: Function to indicate on the board which player is currently placing a piece
+        #Function to indicate on the board which player is currently placing a piece
+        #Identify which player's turn it is
+        for i in range(0, 8):
+            if self.current_player == 1:
+                color = Colors.RED
+            if self.current_player == 2:
+                color = Colors.YELLOW
+            self.board.set_cell_color(i,0, color)
         pass
 
     def is_board_full(self):
-        #TODO: Return whether or not the game state has no more legal moves
+        #Return whether or not the game state has no more legal moves
         for full_row in self.game_state:
             for cell_val in full_row:
                 if cell_val == 0:
@@ -103,26 +110,23 @@ class ConnectFour:
         pass  
 
     def get_player_color(self, player) -> tuple[int, int, int]:
-        #TODO: Return the color for the given player 
+        #Return the color for the given player 
         if self.current_player == 1:
             return Colors.RED
         elif self.current_player == 2:
             return Colors.YELLOW
 
-    def is_column_full(self, col: int):
-        #TODO: Return if the given column is currently full
-        pass
 
     def check_win(self):
-        #TODO: Check the game state to see if any player has won or if there is a draw
+        #Check the game state to see if any player has won or if there is a draw
         pass
 
     def show_winner(self):
-        #TODO: Display on the board who won
+        #Display on the board who won
         pass
 
     def show_tie_game(self):
-        #TODO: Display on the board that there was a draw
+        #Display on the board that there was a draw
         pass
 
 
