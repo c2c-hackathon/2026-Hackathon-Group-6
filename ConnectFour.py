@@ -52,10 +52,15 @@ class ConnectFour:
 
         print("handled button event")
         pass
-
+    #If the row is full, it will return -1.
     def find_lowest_empty_row(self, col: int):
         #TODO: Return the lowest empty row in the column.
-        pass
+        for row in range(len(self.game_state)):
+            if self.game_state[row][col] == 0:
+                continue
+            else:
+                return row - 1
+        return len(self.game_state) -1
 
     def place_piece(self, col: int):
         #TODO: Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
