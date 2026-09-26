@@ -32,6 +32,7 @@ class ConnectFour:
         self.game_state = empty_board
         current_player = 1
         self.update_board_colors()
+        print("reset game...")
         
 
     def register_callbacks(self):
@@ -62,18 +63,17 @@ class ConnectFour:
 
     def update_board_colors(self):
         #TODO: un hardcoded magic number of 8
+        color = Colors.WHITE
         for i in range(0, 8):
-            for j in range(0, 8):
+            for j in range(2, 8):
                 x = i
                 y = j
                 if self.game_state[i][j] == 1:
                     color = Colors.BLUE
                 elif self.game_state[i][j] == 2:
                     color = Colors.RED
-                else:
-                    color = Colors.WHITE
                 self.board.set_cell_color(x, y, color)
-        pass
+        self.board.update_display()
     
 
     def switch_player(self):
