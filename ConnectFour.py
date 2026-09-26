@@ -7,6 +7,7 @@ import Colors
 
 
 player_one = 1
+difficulty = 1
 player_two = 2
 settings = -1
 empty_board = [ [0,0,0,0,0,0,0,0],
@@ -40,6 +41,9 @@ class ConnectFour:
         #Register callbacks that will be run when buttons are pressed and released
         self.board.set_callback(0,1, self.reset_game)
         self.board.activate_key(0, 1, Action.BUTTON_PRESSED)
+        for col in range(len(self.game_state)):
+            self.board.set_callback(col,0, self.place_piece)
+            self.board.activate_key(col, 0, Action.BUTTON_PRESSED)
   
     def handle_button_event(self, x:int, y: int, action: Action):
         """
@@ -48,7 +52,7 @@ class ConnectFour:
         """
         #Implement what will happen when the button at position x,y is pressed or released
 
-
+        self.place_piece(x)
         print("handled button event")
         pass
     #If the row is full, it will return -1.
@@ -61,7 +65,7 @@ class ConnectFour:
                 return row - 1
         return len(self.game_state) -1
 
-    def place_piece(self, col: int):
+    def place_piece(self, x:int, y: int, action: Action):
         #Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
         pass
 
