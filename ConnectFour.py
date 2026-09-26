@@ -25,6 +25,7 @@ class ConnectFour:
         super().__init__()
         self.game_state = empty_board #0 <- empty | 1 <-player1 | 2 <-player2 | -1 <- SETTINGS...
         self.register_callbacks()
+        print(self.is_board_full())
 
     def reset_game(self, x:int, y: int, action: Action):
         #TODO reset the game state to its original empty state
@@ -94,6 +95,11 @@ class ConnectFour:
 
     def is_board_full(self):
         #TODO: Return whether or not the game state has no more legal moves
+        for full_row in self.game_state:
+            for cell_val in full_row:
+                if cell_val == 0:
+                    return False
+        return True
         pass  
 
     def get_player_color(self, player) -> tuple[int, int, int]:
