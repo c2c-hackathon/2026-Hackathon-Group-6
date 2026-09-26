@@ -64,15 +64,18 @@ class ConnectFour:
     def update_board_colors(self):
         #TODO: un hardcoded magic number of 8
         color = Colors.WHITE
-        for i in range(0, 8):
-            for j in range(2, 8):
-                x = i
-                y = j
+        for i in range(2, 8):
+            for j in range(0, 8):
+                x = j
+                y = i
                 if self.game_state[i][j] == 1:
                     color = Colors.BLUE
                 elif self.game_state[i][j] == 2:
                     color = Colors.RED
+                else:
+                    color = Colors.WHITE
                 self.board.set_cell_color(x, y, color)
+                 
         self.board.update_display()
     
 
